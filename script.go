@@ -849,6 +849,19 @@ func (p *Pipe) String() (string, error) {
 	return string(data), nil
 }
 
+// Trim takes in a string of characters to trim and removes them from
+// the contents of the Pipe. Similar to how tr -d works.
+func (p *Pipe) Trim(s string) *Pipe {
+	return p.EachLine(func(line string, out *strings.Builder) {
+		for _, v := range s {
+			line = strings.ReplaceAll(line, string(v), "")
+		}
+		data := strings.ReplaceAll(line, s, "")
+		out.WriteString(data)
+		out.WriteRune('\n')
+	})
+}
+
 // WriteFile writes the contents of the Pipe to the specified file, and closes
 // the pipe after reading. If the file already exists, it is truncated and the
 // new data will replace the old. It returns the number of bytes successfully

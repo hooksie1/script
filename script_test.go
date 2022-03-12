@@ -1186,6 +1186,21 @@ func TestStringOutputsInputStringUnchanged(t *testing.T) {
 	}
 }
 
+func TestTrim(t *testing.T) {
+	t.Parallel()
+	input := "this is a test"
+	want := "his is a s\n"
+
+	got, err := script.Echo(input).Trim("et").String()
+	if err != nil {
+		t.Error(err)
+	}
+	if got != want {
+		t.Errorf("want %q, got %q", want, got)
+	}
+
+}
+
 func TestWriteFileNew(t *testing.T) {
 	t.Parallel()
 	want := "Hello, world"
