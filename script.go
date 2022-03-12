@@ -853,11 +853,12 @@ func (p *Pipe) String() (string, error) {
 // the contents of the Pipe. Similar to how tr -d works.
 func (p *Pipe) Trim(s string) *Pipe {
 	return p.EachLine(func(line string, out *strings.Builder) {
-		for _, v := range s {
-			line = strings.ReplaceAll(line, string(v), "")
+		if s != "" {
+			for _, v := range s {
+				line = strings.ReplaceAll(line, string(v), "")
+			}
 		}
-		data := strings.ReplaceAll(line, s, "")
-		out.WriteString(data)
+		out.WriteString(line)
 		out.WriteRune('\n')
 	})
 }

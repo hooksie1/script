@@ -1188,17 +1188,44 @@ func TestStringOutputsInputStringUnchanged(t *testing.T) {
 
 func TestTrim(t *testing.T) {
 	t.Parallel()
-	input := "this is a test"
-	want := "his is a s\n"
 
-	got, err := script.Echo(input).Trim("et").String()
+	tt := []struct {
+		name  string
+		input string
+		want  string
+		trim  string
+	}{
+		{name: "with text", input: "this is a test", want: "his is a s\n", trim: "et"},
+		{name: "empty string", input: "this is a test", want: "this is a test\n", trim: ""},
+		{name: "int as string", input: "this is a test2", want: "this is a test\n", trim: "2"},
+	}
+
+	for _, v := range tt {
+		t.Run(v.name, func(t *testing.T) {
+			got, err := script.Echo(v.input).Trim(v.trim).String()
+			if err != nil {
+				t.Error(err)
+			}
+			if got != v.want {
+				t.Errorf("want %q, got %q", v.want, got)
+			}
+		})
+	}
+
+}
+
+func TestTrimNum(t *testing.T) {
+	t.Parallel()
+	input := "this is a test2"
+	want := "this is a test\n"
+
+	got, err := script.Echo(input).Trim("2").String()
 	if err != nil {
 		t.Error(err)
 	}
 	if got != want {
 		t.Errorf("want %q, got %q", want, got)
 	}
-
 }
 
 func TestWriteFileNew(t *testing.T) {
