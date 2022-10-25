@@ -1198,7 +1198,7 @@ func TestTrim(t *testing.T) {
 		{name: "with text", input: "this is a test", want: "his is a s\n", trim: "et"},
 		{name: "empty string", input: "this is a test", want: "this is a test\n", trim: ""},
 		{name: "int as string", input: "this is a test2", want: "this is a test\n", trim: "2"},
-		{name: "special characters", input: "spe-c!@l/ch@r$\n", want: "speclchr\n", trim: "-!@/$\n"},
+		{name: "special characters", input: "spe-c!@l/ch@r$\n", want: "speclchr\n", trim: "-!@/$`\n`"},
 	}
 
 	for _, v := range tt {
@@ -1452,6 +1452,8 @@ func doMethodsOnPipe(t *testing.T, p *script.Pipe, kind string) {
 	p.String()
 	action = "WithError()"
 	p.WithError(nil)
+	action = "Trim()"
+	p.Trim(`\n`)
 	action = "WithReader()"
 	p.WithReader(strings.NewReader(""))
 	action = "WriteFile()"
