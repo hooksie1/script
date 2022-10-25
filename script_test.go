@@ -1326,7 +1326,6 @@ func TestStringOutputsInputStringUnchanged(t *testing.T) {
 	}
 }
 
-<<<<<<< HEAD
 func TestTrim(t *testing.T) {
 	t.Parallel()
 
@@ -1370,8 +1369,6 @@ func TestTrimNum(t *testing.T) {
 	}
 }
 
-func TestWriteFileNew(t *testing.T) {
-=======
 func TestWaitReadsPipeSourceToCompletion(t *testing.T) {
 	t.Parallel()
 	source := bytes.NewBufferString("hello")
@@ -1382,7 +1379,6 @@ func TestWaitReadsPipeSourceToCompletion(t *testing.T) {
 }
 
 func TestWriteFile_WritesInputToFileCreatingItIfNecessary(t *testing.T) {
->>>>>>> master
 	t.Parallel()
 	want := "Hello, world"
 	path := t.TempDir() + "/" + t.Name()
@@ -1594,7 +1590,6 @@ func doMethodsOnPipe(t *testing.T, p *script.Pipe, kind string) {
 	p.WriteFile(t.TempDir() + "bogus.txt")
 }
 
-func TestNilPipes(t *testing.T) {
 func TestReadProducesCompletePipeContents(t *testing.T) {
 	t.Parallel()
 	want := []byte("hello")
